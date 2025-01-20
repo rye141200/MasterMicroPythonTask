@@ -60,6 +60,31 @@ class Styles:
                 background-color: #ff1a1a;
             }}
         """
+    
+    @staticmethod
+    def get_success_toastr_style():
+        return """
+            QLabel {
+                color: white;
+                padding: 10px 20px;
+                background-color: rgba(76, 175, 80, 0.9);  /* #4CAF50 with opacity */
+                border-radius: 20px;
+                margin: 10px;
+            }
+        """
+
+    @staticmethod
+    def get_danger_toastr_style():
+        return """
+            QLabel {
+                color: white;
+                padding: 10px 20px;
+                background-color: rgba(255, 68, 68, 0.9);  /* #ff4444 with opacity */
+                border-radius: 20px;
+                margin: 10px;
+            }
+        """
+    
     def get_text_input_style(self):
         return """
             QLineEdit {
