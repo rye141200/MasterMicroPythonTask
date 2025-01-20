@@ -31,41 +31,26 @@ class MainView(QMainWindow):
         # Input fields with labels
         self.input1 = QLineEdit()
         self.input1.setPlaceholderText("Enter f(x)")
-        self.input1.setStyleSheet("""
-            QLineEdit {
-                padding: 8px;
-                border: 2px solid #ddd;
-                border-radius: 5px;
-                margin: 5px;
-            }
-        """)
+        self.input1.setStyleSheet(self.Styles.get_text_input_style())
 
         self.input2 = QLineEdit()
         self.input2.setPlaceholderText("Enter g(x)")
-        self.input2.setStyleSheet("""
-            QLineEdit {
-                padding: 8px;
-                border: 2px solid #ddd;
-                border-radius: 5px;
-                margin: 5px;
-            }
-        """)
+        self.input2.setStyleSheet(self.Styles.get_text_input_style())
 
         #! Solve button
         self.solve_button = QPushButton("Solve")
         self.solve_button.setStyleSheet(self.Styles.get_green_button_style())
-        # self.Styles.setup_button_animation(self.solve_button)
-        # self.Styles.setup_button_animations(self.solve_button)
+        
         
         #! Clear button
         self.clear_button = QPushButton("Clear")
         self.clear_button.setStyleSheet(self.Styles.get_danger_button_style())
-        # self.Styles.setup_button_animation(self.clear_button)
-        # self.Styles.setup_button_animations(self.clear_button)
+        
         
         
         self.solve_button.setCursor(QCursor(Qt.PointingHandCursor))
         self.clear_button.setCursor(QCursor(Qt.PointingHandCursor))
+        
         # Add widgets to sidebar
         sidebar_layout.addWidget(self.input1)
         sidebar_layout.addWidget(self.input2)

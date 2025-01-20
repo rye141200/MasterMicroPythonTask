@@ -1,3 +1,4 @@
-from .plotter import plot_functions
+from .plotter import plot_functions,Plotter
 from .stylesheet import Styles
-__all__ = ['plot_functions','Styles']
+
+__all__ = ['Plotter','plot_functions','Styles']

@@ -60,3 +60,12 @@ class Styles:
                 background-color: #ff1a1a;
             }}
         """
+    def get_text_input_style(self):
+        return """
+            QLineEdit {
+                padding: 8px;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                margin: 5px;
+            }
+        """
