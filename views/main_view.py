@@ -5,7 +5,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from utils.stylesheet import Styles
 from utils.toastr import Toast
-from utils.ui_components import ComponentFactory
+from utils.ui_components import ComponentFactory, LoadingOverlay
 
 class MainView(QMainWindow):
     def __init__(self):
@@ -13,7 +13,7 @@ class MainView(QMainWindow):
         self.ComponentFactory = ComponentFactory()
         # self.Styles = Styles("100",'10')
         self.init_ui()
-        
+        self.loading_overlay = LoadingOverlay(self)
 
     def show_success(self, message):
         toast = Toast.get_instance(self)

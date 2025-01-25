@@ -8,21 +8,20 @@ class Plotter:
         
     def clear_canvas(self):
         self.canvas.figure.clear()
-        ax = self.canvas.figure.add_subplot(111)  # Re-add the subplot
-        ax.grid(True, linestyle='--', alpha=0.7)  # Re-add the grid
-        self.canvas.draw()  # Redraw the canvas
+        ax = self.canvas.figure.add_subplot(111)  
+        ax.grid(True, linestyle='--', alpha=0.7)  
+        self.canvas.draw()  
         
     def plot(self, fx, gx, solutions):
         self.canvas.figure.clear()
         ax = self.canvas.figure.add_subplot(111)
     
-        # Convert sympy expressions to numpy functions with proper module settings
         f1 = lambdify(fx.x, fx.expression, modules=['numpy', {'log': np.log, 'sqrt': np.sqrt}])
         f2 = lambdify(gx.x, gx.expression, modules=['numpy', {'log': np.log, 'sqrt': np.sqrt}])
     
         combined_expr = str(fx.expression) + str(gx.expression)
         
-        # Set x range based on function type and solutions
+        
         if 'log' in combined_expr or 'sqrt' in combined_expr:
             x_min = 0.0001
         else:

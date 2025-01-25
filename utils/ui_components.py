@@ -1,7 +1,7 @@
 from utils.stylesheet import Styles
-from PySide2.QtWidgets import QLineEdit,QPushButton,QFrame,QVBoxLayout
-from PySide2.QtCore import Qt
-from PySide2.QtGui import QCursor
+from PySide2.QtWidgets import QLineEdit,QPushButton,QFrame,QVBoxLayout, QLabel, QWidget
+from PySide2.QtCore import Qt, QTimer
+from PySide2.QtGui import QCursor, QPalette, QColor
 
 class ComponentFactory:
     def __init__(self,border_radius="100",margin="10"):
@@ -31,5 +31,38 @@ class ComponentFactory:
     def add_widgets_to_parent(self,parent,widgets):
         for widget in widgets:
             parent.addWidget(widget)
+
+class LoadingOverlay(QWidget):
+    def __init__(self, parent):
+        super().__init__(parent)
+        palette = self.palette()
+        palette.setColor(QPalette.Window, QColor(0, 0, 0, 100))
+        self.setAutoFillBackground(True)
+        self.setPalette(palette)
+        self.hide()
         
-    
+        # Create loading label
+        self.loading_label = QLabel("Calculating...", self)
+        self.loading_label.setStyleSheet("""
+            QLabel {
+                color: white;
+                padding: 20px;
+                background-color: rgba(0, 0, 0, 0.7);
+                border-radius: 10px;
+                font-size: 16px;
+            }
+        """)
+        
+    def showEvent(self, event):
+        self.resize(self.parent().size())
+        self.loading_label.move(
+            self.width()//2 - self.loading_label.width()//2,
+            self.height()//2 - self.loading_label.height()//2
+        )
+
+    def show_loading(self):
+        self.show()
+        QTimer.singleShot(100, lambda: self.raise_())
+        
+    def hide_loading(self):
+        self.hide()
