@@ -33,9 +33,22 @@ class MainController:
         try:
             fx = FunctionModel(expr1)
             gx = FunctionModel(expr2)
-            solutions = fx.solve_with(gx)
-            self.plotter.plot(fx, gx, solutions)
             
+            if fx.is_same_function(gx):
+                # Plot identical functions
+                self.plotter.soft_reset()
+                self.plotter.plot(fx, gx, [])  # Empty solutions list since they're identical
+                
+                # Update UI to show infinite solutions message
+                self.view.solutions_label.setText("Infinite solutions were found, the two functions are the same")
+                self.toast.show_success("✓ Functions are identical")
+                return
+            
+            # Normal case - find intersections
+            solutions = fx.solve_with(gx)
+            
+            self.plotter.soft_reset()
+            self.plotter.plot(fx, gx, solutions)
             
             self.view.update_solutions(solutions)
             if solutions:

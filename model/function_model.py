@@ -1,7 +1,8 @@
-from sympy import lambdify, symbols, solve, sympify,solve_univariate_inequality, S, oo
+from sympy import Interval, lambdify, symbols, solve, sympify,solve_univariate_inequality, S, oo
 from scipy.optimize import fsolve
 from sympy.calculus.util import continuous_domain
 import numpy as np
+import sympy as sp
 import warnings
 warnings.filterwarnings('ignore', category=RuntimeWarning)
 
@@ -12,6 +13,9 @@ class FunctionModel:
         expression = expression.replace('log10', 'log')
         self.expression = sympify(expression)  # Converts string to symbolic math
         print(self.expression)
+    
+    def is_same_function(self,other_model):
+        return self.expression == other_model.expression
     
     def solve_with(self, other_model):
         try:
@@ -31,7 +35,34 @@ class FunctionModel:
         
         solutions = set()
         
-        # More focused sampling around potential solution areas
+        
+        # **1. Adaptive range expansion**
+        initial_range = np.linspace(0.1, 10, 100)  # Start small to catch early solutions
+        expanded_ranges = [initial_range]
+        
+        # Expand search exponentially to catch distant intersections
+        for scale in [10, 100, 1000]:
+            expanded_ranges.append(np.linspace(scale, scale * 10, 50))
+        
+        # Merge ranges dynamically
+        x_samples = np.concatenate(expanded_ranges)
+        
+        # **2. Find sign changes for potential intersections**
+        y_diff = equation(x_samples)
+        sign_changes = np.where(np.diff(np.sign(y_diff)))[0]
+        
+        # Ensure at least one valid range is detected
+        if len(sign_changes) > 0:
+            x_range = np.concatenate([
+                np.linspace(x_samples[idx], x_samples[idx + 1], 50)
+                for idx in sign_changes
+            ])
+        else:
+            x_range = np.linspace(0.1, 1000, 500)  # Fallback wide range
+
+        
+        #! Use this in case of messed up code
+        """ # More focused sampling around potential solution areas
         x_ranges = []
         if 'log' in str(self.expression) or 'log' in str(other_model.expression):
             x_ranges.extend([
@@ -45,7 +76,7 @@ class FunctionModel:
                 np.linspace(2, 10, 30)          # Less dense for larger values
             ])
         
-        x_range = np.concatenate(x_ranges)
+        x_range = np.concatenate(x_ranges) """
         
         # Try numerical method with better tolerance
         for x0 in x_range:
