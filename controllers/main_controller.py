@@ -7,8 +7,8 @@ class MainController:
     def __init__(self, view):
         self.view = view
         self.setup_connections()
-        #! No dependency injection sadly
-        self.plotter = Plotter(self.view.canvas)
+        
+        self.plotter = Plotter(self.view.canvas,2)
         self.toast = Toast.get_instance(self.view)
         
     def setup_connections(self):
@@ -22,7 +22,6 @@ class MainController:
         try:
             #! Show loading
             self.view.loading_overlay.show_loading()
-            
             #! Use QTimer to allow UI to update before computation
             QTimer.singleShot(100, lambda: self._solve(expr1, expr2))
             
@@ -45,7 +44,7 @@ class MainController:
                 self.toast.show_danger("No real solutions were found")
                 
         except Exception as e:
-            self.view.show_success("❌ " + str(e))
+            self.toast.show_danger("❌ " + str(e))
         finally:
             self.view.loading_overlay.hide_loading()
             
@@ -53,4 +52,5 @@ class MainController:
         self.plotter.clear_canvas()
         self.view.input1.clear()
         self.view.input2.clear()
+        self.view.solutions_label.setText("")
         print("Hello from clear button!")

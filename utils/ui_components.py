@@ -28,6 +28,11 @@ class ComponentFactory:
         sidebar_layout.setAlignment(Qt.AlignTop)
         return (sidebar,sidebar_layout)
     
+    def initialize_solutions_label_box(self):
+        solutions_label = QLabel()
+        solutions_label.setStyleSheet(self.Styles.get_solutions_label_style())
+        return solutions_label
+    
     def add_widgets_to_parent(self,parent,widgets):
         for widget in widgets:
             parent.addWidget(widget)

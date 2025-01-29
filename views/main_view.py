@@ -21,7 +21,7 @@ class MainView(QMainWindow):
 
     def update_solutions(self, solutions):
         if solutions:
-            solutions_text = "Solutions: " + ", ".join([f"x = {sol}" for sol in solutions])
+            solutions_text = "Solutions: " + ", ".join([f"x = {float(sol)}" for sol in solutions])
             self.solutions_label.setText(solutions_text)
         else:
             self.solutions_label.setText("No intersections found")
@@ -63,13 +63,5 @@ class MainView(QMainWindow):
         main_layout.addWidget(graph_container, stretch=1)
         
         #! Solutions box
-        self.solutions_label = QLabel()
-        self.solutions_label.setStyleSheet("""
-            QLabel {
-                padding: 10px;
-                background-color: #f8f9fa;
-                border-radius: 5px;
-                margin: 5px;
-            }
-        """)
+        self.solutions_label = self.ComponentFactory.initialize_solutions_label_box()
         graph_layout.addWidget(self.solutions_label)

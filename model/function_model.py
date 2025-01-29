@@ -1,6 +1,10 @@
-from sympy import lambdify, symbols, solve, sympify
-from scipy.optimize import fsolve, newton, bisect
+from sympy import lambdify, symbols, solve, sympify,solve_univariate_inequality, S, oo
+from scipy.optimize import fsolve
+from sympy.calculus.util import continuous_domain
 import numpy as np
+import warnings
+warnings.filterwarnings('ignore', category=RuntimeWarning)
+
 class FunctionModel:
     def __init__(self, expression):
         self.x = symbols('x')
@@ -8,20 +12,17 @@ class FunctionModel:
         expression = expression.replace('log10', 'log')
         self.expression = sympify(expression)  # Converts string to symbolic math
         print(self.expression)
-
-          
     
     def solve_with(self, other_model):
         try:
-            # Try symbolic solution first
             symbolic_sols = [sol for sol in solve(self.expression - other_model.expression, self.x) if sol.is_real]
             if symbolic_sols:
                 return symbolic_sols
         except:
             pass
         
+        #! Numeric solutions
         def equation(x):
-            # Create lambdify functions once outside the loop
             f1 = lambdify(self.x, self.expression, modules=['numpy', {'log10': np.log10}])
             f2 = lambdify(self.x, other_model.expression, modules=['numpy', {'log10': np.log10}])
             def diff(x):

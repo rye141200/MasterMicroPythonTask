@@ -94,3 +94,12 @@ class Styles:
                 margin: 5px;
             }
         """
+    def get_solutions_label_style(self):
+        return """
+            QLabel {
+                padding: 10px;
+                background-color: #f8f9fa;
+                border-radius: 5px;
+                margin: 5px;
+            }
+        """
