@@ -6,7 +6,7 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 from PySide2.QtWidgets import QToolButton
 
 class Plotter:
-    def __init__(self, canvas, zoom=2, zoom_offset=5, max_zoom_level=5, min_zoom_level=0):
+    def __init__(self, canvas, zoom=2, zoom_offset=5, max_zoom_level=5, min_zoom_level=-3):
         self.canvas = canvas
         self.zoom = zoom
         self.zoom_offset = zoom_offset

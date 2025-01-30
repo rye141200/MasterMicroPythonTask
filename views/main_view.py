@@ -1,6 +1,7 @@
 from PySide2.QtWidgets import (QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, 
                                QFrame,QLabel,QMessageBox)
 from PySide2.QtCore import Qt
+from PySide2.QtGui import QPixmap
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from utils.stylesheet import Styles
@@ -49,7 +50,17 @@ class MainView(QMainWindow):
         
         # Add widgets to sidebar
         self.ComponentFactory.add_widgets_to_parent(sidebar_layout,[self.input1,self.input2,self.solve_button,self.clear_button])
+        
+        # Add stretch to push logo to bottom
         sidebar_layout.addStretch()
+        
+        # Add logo at the bottom of sidebar
+        logo_label = QLabel()
+        logo_pixmap = QPixmap("images/mastermicrologo.png")
+        scaled_pixmap = logo_pixmap.scaled(200, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        logo_label.setPixmap(scaled_pixmap)
+        logo_label.setAlignment(Qt.AlignCenter)
+        sidebar_layout.addWidget(logo_label)
 
         # Right side - Graph area
         graph_container = QFrame()
