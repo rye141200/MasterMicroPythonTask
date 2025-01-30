@@ -8,7 +8,7 @@ A Python application that finds and visualizes intersection points between two m
 
 ## 2. Prerequisites
 
-- Python 3.x
+- Python 3.10
 - Required packages:
 
 ```bash
