@@ -35,30 +35,26 @@ class FunctionModel:
         
         solutions = set()
         
-        
         # **1. Adaptive range expansion**
-        initial_range = np.linspace(0.1, 10, 100)  # Start small to catch early solutions
+        initial_range = np.linspace(0.1, 10, 100) 
         expanded_ranges = [initial_range]
         
-        # Expand search exponentially to catch distant intersections
         for scale in [10, 100, 1000]:
             expanded_ranges.append(np.linspace(scale, scale * 10, 50))
         
-        # Merge ranges dynamically
         x_samples = np.concatenate(expanded_ranges)
         
         # **2. Find sign changes for potential intersections**
         y_diff = equation(x_samples)
         sign_changes = np.where(np.diff(np.sign(y_diff)))[0]
         
-        # Ensure at least one valid range is detected
         if len(sign_changes) > 0:
             x_range = np.concatenate([
                 np.linspace(x_samples[idx], x_samples[idx + 1], 50)
                 for idx in sign_changes
             ])
         else:
-            x_range = np.linspace(0.1, 1000, 500)  # Fallback wide range
+            x_range = np.linspace(0.1, 1000, 500) 
 
         
         #! Use this in case of messed up code
@@ -78,7 +74,6 @@ class FunctionModel:
         
         x_range = np.concatenate(x_ranges) """
         
-        # Try numerical method with better tolerance
         for x0 in x_range:
             try:
                 sol = fsolve(equation, x0, xtol=1e-8)[0]

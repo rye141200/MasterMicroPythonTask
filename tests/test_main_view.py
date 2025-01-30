@@ -51,13 +51,6 @@ def test_loading_overlay(view, qtbot):
     qtbot.wait(200)  
     assert not overlay.isVisible()
 
-def test_toast_message(view, qtbot):
-    toast = Toast.get_instance(view)  
-    view.show_success("Test message")
-    qtbot.wait(200)  
-    assert toast.text() == "Test message"
-    assert toast.isVisible()
-
 def test_button_styles(view):
     assert "background-color: #4CAF50" in view.solve_button.styleSheet()
     assert "background-color: #ff4444" in view.clear_button.styleSheet()

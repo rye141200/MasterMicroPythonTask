@@ -8,7 +8,9 @@ from model.function_model import FunctionModel
     ("x^2 - 2*x + 1", "0", [1]),       
     ("x^3", "x^2", [0, 1]),            
     ("x^2 - x - 2", "0", [-1, 2]),     
-    ("x^2 - 4*x + 4", "0", [2]),       
+    ("x^2 - 4*x + 4", "0", [2]),   
+    ("log(x**2+x+1)","sqrt(x+2)",[-1.57875,2.11941,70.854]),
+    ("log(x**2)+2","x",[0.463922,-0.31437,5.35669])
 ])
 def test_polynomial_intersection(fx_expr,gx_expr,expected_solutions):
     fx = FunctionModel(fx_expr)
